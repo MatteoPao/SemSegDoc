@@ -110,7 +110,7 @@ if init_fn is not None:
     print("debug")
 
 # Load a previous checkpoint if desired
-model_checkpoint_name = "checkpoints/latest_model_" + args.model + "_" + args.dataset + ".ckpt"
+model_checkpoint_name = "checkpoint/latest_model_" + args.model + "_" + args.dataset + ".ckpt"
 if args.continue_training:
     print('Loaded latest model checkpoint')
     saver.restore(sess, model_checkpoint_name)
@@ -336,6 +336,4 @@ for epoch in range(args.epoch_start_i, args.num_epochs):
     ax3.set_ylabel("Current IoU")
 
     plt.savefig('iou_vs_epochs.png')
-
-
 
