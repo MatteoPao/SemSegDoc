@@ -44,7 +44,7 @@ parser.add_argument('--v_flip', type=str2bool, default=False, help='Whether to r
 parser.add_argument('--brightness', type=float, default=None, help='Whether to randomly change the image brightness for data augmentation. Specifies the max bightness change as a factor between 0.0 and 1.0. For example, 0.1 represents a max brightness change of 10%% (+-).')
 parser.add_argument('--rotation', type=float, default=None, help='Whether to randomly rotate the image for data augmentation. Specifies the max rotation angle in degrees.')
 parser.add_argument('--model', type=str, default="FC-DenseNet56", help='The model you are using. See model_builder.py for supported models')
-parser.add_argument('--frontend', type=str, default="ResNet152", help='The frontend you are using. See frontend_builder.py for supported models')
+parser.add_argument('--frontend', type=str, default="ResNet101", help='The frontend you are using. See frontend_builder.py for supported models')
 args = parser.parse_args()
 
 
@@ -107,6 +107,7 @@ utils.count_params()
 # This must be done AFTER the variables are initialized with sess.run(tf.global_variables_initializer())
 if init_fn is not None:
     init_fn(sess)
+    print("debug")
 
 # Load a previous checkpoint if desired
 model_checkpoint_name = "checkpoints/latest_model_" + args.model + "_" + args.dataset + ".ckpt"
@@ -207,6 +208,7 @@ for epoch in range(args.epoch_start_i, args.num_epochs):
 
     # Create directories if needed
     if not os.path.isdir("./%s/%04d"%("checkpoints",epoch)):
+    	print("create dir ./%s/%04d"%("checkpoints",epoch))
         os.makedirs("./%s/%04d"%("checkpoints",epoch))
 
     # Save latest checkpoint to same file name
