@@ -44,7 +44,7 @@ parser.add_argument('--v_flip', type=str2bool, default=False, help='Whether to r
 parser.add_argument('--brightness', type=float, default=None, help='Whether to randomly change the image brightness for data augmentation. Specifies the max bightness change as a factor between 0.0 and 1.0. For example, 0.1 represents a max brightness change of 10%% (+-).')
 parser.add_argument('--rotation', type=float, default=None, help='Whether to randomly rotate the image for data augmentation. Specifies the max rotation angle in degrees.')
 parser.add_argument('--model', type=str, default="FC-DenseNet56", help='The model you are using. See model_builder.py for supported models')
-parser.add_argument('--frontend', type=str, default="ResNet101", help='The frontend you are using. See frontend_builder.py for supported models')
+parser.add_argument('--frontend', type=str, default="ResNet152", help='The frontend you are using. See frontend_builder.py for supported models')
 args = parser.parse_args()
 
 
@@ -206,8 +206,8 @@ for epoch in range(args.epoch_start_i, args.num_epochs):
     avg_loss_per_epoch.append(mean_loss)
 
     # Create directories if needed
-    if not os.path.isdir("%s/%04d"%("checkpoints",epoch)):
-        os.makedirs("%s/%04d"%("checkpoints",epoch))
+    if not os.path.isdir("./%s/%04d"%("checkpoints",epoch)):
+        os.makedirs("./%s/%04d"%("checkpoints",epoch))
 
     # Save latest checkpoint to same file name
     print("Saving latest checkpoint")
@@ -215,12 +215,12 @@ for epoch in range(args.epoch_start_i, args.num_epochs):
 
     if val_indices != 0 and epoch % args.checkpoint_step == 0:
         print("Saving checkpoint for this epoch")
-        saver.save(sess,"%s/%04d/model.ckpt"%("checkpoints",epoch))
+        saver.save(sess,"./%s/%04d/model.ckpt"%("checkpoints",epoch))
 
 
     if epoch % args.validation_step == 0:
         print("Performing validation")
-        target=open("%s/%04d/val_scores.csv"%("checkpoints",epoch),'w')
+        target=open("./%s/%04d/val_scores.csv"%("checkpoints",epoch),'w')
         target.write("val_name, avg_accuracy, precision, recall, f1 score, mean iou, %s\n" % (class_names_string))
 
 
