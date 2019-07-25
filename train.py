@@ -207,9 +207,9 @@ for epoch in range(args.epoch_start_i, args.num_epochs):
     avg_loss_per_epoch.append(mean_loss)
 
     # Create directories if needed
-    if not os.path.isdir("./%s/%04d"%("checkpoints",epoch)):
-        os.makedirs("./%s/%04d"%("checkpoints",epoch))
-        print("./%s/%04d"%("checkpoints",epoch))
+    if not os.path.isdir("./%s/%04d"%("checkpoint",epoch)):
+        os.makedirs("./%s/%04d"%("checkpoint",epoch))
+        print("./%s/%04d"%("checkpoint",epoch))
 
     # Save latest checkpoint to same file name
     print("Saving latest checkpoint")
@@ -217,12 +217,12 @@ for epoch in range(args.epoch_start_i, args.num_epochs):
 
     if val_indices != 0 and epoch % args.checkpoint_step == 0:
         print("Saving checkpoint for this epoch")
-        saver.save(sess,"./%s/%04d/model.ckpt"%("checkpoints",epoch))
+        saver.save(sess,"./%s/%04d/model.ckpt"%("checkpoint",epoch))
 
 
     if epoch % args.validation_step == 0:
         print("Performing validation")
-        target=open("./%s/%04d/val_scores.csv"%("checkpoints",epoch),'w')
+        target=open("./%s/%04d/val_scores.csv"%("checkpoint",epoch),'w')
         target.write("val_name, avg_accuracy, precision, recall, f1 score, mean iou, %s\n" % (class_names_string))
 
 
@@ -269,8 +269,8 @@ for epoch in range(args.epoch_start_i, args.num_epochs):
 
             file_name = os.path.basename(val_input_names[ind])
             file_name = os.path.splitext(file_name)[0]
-            cv2.imwrite("%s/%04d/%s_pred.png"%("checkpoints",epoch, file_name),cv2.cvtColor(np.uint8(out_vis_image), cv2.COLOR_RGB2BGR))
-            cv2.imwrite("%s/%04d/%s_gt.png"%("checkpoints",epoch, file_name),cv2.cvtColor(np.uint8(gt), cv2.COLOR_RGB2BGR))
+            cv2.imwrite("%s/%04d/%s_pred.png"%("checkpoint",epoch, file_name),cv2.cvtColor(np.uint8(out_vis_image), cv2.COLOR_RGB2BGR))
+            cv2.imwrite("%s/%04d/%s_gt.png"%("checkpoint",epoch, file_name),cv2.cvtColor(np.uint8(gt), cv2.COLOR_RGB2BGR))
 
 
         target.close()
